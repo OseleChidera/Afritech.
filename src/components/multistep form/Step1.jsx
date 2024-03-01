@@ -97,7 +97,7 @@ const Step1 = ({ data, next }) => {
                         <div className="mb-3">
                             <div className="flex flex-col">
                                 <label className='font-bold capitalize block mb-[0.25rem] text-white' htmlFor="email">Email : </label>
-                                <Field name="email" type="email" className="w-full p-2 px-5 rounded-xl"/>
+                                <Field name="email" type="email" className="w-full p-2 px-5 rounded-xl" placeholder="Enter your email"/>
 
                             </div>
                             {errors.email && touched.email ? (
@@ -109,7 +109,7 @@ const Step1 = ({ data, next }) => {
                             <div className=" flex flex-col relative">
                                 <label className='font-bold capitalize block mb-[0.25rem] text-white' htmlFor="password">Password : </label>
                                 <div className="flex flex-row items-center w-full ">
-                                    <Field name="password" type={showPassowrd1 ? 'text' : 'password'} className="w-full p-2 px-5 rounded-xl" placeholder="*********" />
+                                    <Field name="password" type={showPassowrd1 ? 'text' : 'password'} className="w-full p-2 px-5 rounded-xl" placeholder="Enter your password" />
                                     <button type='button' onClick={() => setShowPassword1((showPassowrd1) => !showPassowrd1)} className='bg-transparent absolute right-5'>
                                         <img width="18" height="18" src="https://img.icons8.com/ios/50/show-password.png" alt="show-password" />
                                     </button>
@@ -126,7 +126,7 @@ const Step1 = ({ data, next }) => {
                                 <label className='font-bold capitalize block mb-[0.25rem] text-white' htmlFor="confirm_password">Re-enter Password : </label>
                                 <div className="flex flex-row items-center w-full">
                                     <Field name="confirm_password" type={showPassowrd2 ? 'text' : 'password'} className="w-full p-2 px-5 rounded-xl
-                                    " placeholder="*********" />
+                                    " placeholder="Re-Enter your password" />
                                     <button type='button' onClick={() => setShowPassword2((showPassowrd2) => !showPassowrd2)} className='bg-transparent absolute  right-5'>
                                         <img width="18" height="18" src="https://img.icons8.com/ios/50/show-password.png" alt="show-password" />
                                     </button>
