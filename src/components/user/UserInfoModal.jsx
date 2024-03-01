@@ -32,7 +32,10 @@ export default function UserInfoModal({ title, action, index }) {
                     router.push('/main/user')
                     toast.info("Signin again", { autoClose: 500 })
                     auth.signOut();
-                    localStorage.removeItem('afriTechUserID');
+                    if (typeof window !== 'undefined') {
+                      localStorage.removeItem('afriTechUserID');
+                  }
+                  
                     router.push('/signin')
                 }})})
                 .catch((error) => { console.error("Error sending verification email:", error)});

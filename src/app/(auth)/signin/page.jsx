@@ -24,8 +24,19 @@ export default function Page({ user }) {
     const dispatch = useDispatch(); // Retrieve dispatch function from Redux
 
     // Local storage
-    const localUserID = localStorage.getItem('afriTechUserID'); // Retrieve user ID from local storage
-    const userIdFromLocalStorage = localUserID ? JSON.parse(localUserID) : null; // Parse user ID from local storage
+let localUserID;
+let userIdFromLocalStorage;
+
+if (typeof window !== 'undefined') {
+    // Check if the code is running in a browser environment
+    localUserID = localStorage.getItem('afriTechUserID'); // Retrieve user ID from local storage
+    userIdFromLocalStorage = localUserID ? JSON.parse(localUserID) : null; // Parse user ID from local storage
+} else {
+    // Handle the case where localStorage is not available (e.g., server-side rendering)
+    localUserID = null;
+    userIdFromLocalStorage = null;
+}
+
 
     // Router
     const router = useRouter(); // Initialize router for navigation
@@ -66,7 +77,7 @@ export default function Page({ user }) {
                 newData.favourites = [""]; // Initialize favourites
                 newData.financing = [""]; // Initialize financing
                 newData.reviews = [""]; // Initialize reviews
-                newData.paymentCompleted = [""]; // Initialize payment completed
+                newData.paymentCompletedArray = [""]; // Initialize payment completed
                 // Update Firestore document
                 updateDoc(docRef, newData); // Update document with new data
                 // Display success toast and redirect

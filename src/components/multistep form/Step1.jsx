@@ -28,13 +28,19 @@ const Step1 = ({ data, next }) => {
         setDoc(customDocRef, { email: values.email, password: values.password });
     }
     const saveUserDataToLocalStorage = (userData) => {
-        localStorage.setItem('afriTechUserID', JSON.stringify(userData));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('afriTechUserID', JSON.stringify(userData));
+        }
+        
     };
 
     async function  handleSubmit(values) {
         next(values)
         await auth.signOut();
-        localStorage.removeItem('afriTechUserID');
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('afriTechUserID');
+        }
+        
         createUserWithEmailAndPassword(auth, values.email, values.password)
             // console.log("createUserWithEmailAndPassword" + JSON.stringify(auth, null, 2))
 
@@ -52,7 +58,10 @@ const Step1 = ({ data, next }) => {
 
 
                 //save the user id in local storage on signup
-                localStorage.setItem('afriTechUserID', JSON.stringify(`${userProfile.uid}`))
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem('afriTechUserID', JSON.stringify(`${userProfile.uid}`));
+                }
+                
                 // console.log("auth.currentUser" + " " + JSON.stringify(auth.currentUser, null, 2))
 
             })

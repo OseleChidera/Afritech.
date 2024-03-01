@@ -18,7 +18,21 @@ export default function Multistep() {
   // Redux state management
   const pageindex = useSelector((state) => state.user.signupIndex); // Get current page index from Redux store
   const userFormEntries = useSelector((state) => state.user.userFormEntries); // Get user form entries from Redux store
-  const userIdFromLocalStorage = localStorage.getItem('afriTechUserID') ? JSON.parse(localStorage.getItem('afriTechUserID')) : null; // Get user ID from local storage
+  // Get user ID from local storage
+  // Local storage
+let localUserID;
+let userIdFromLocalStorage;
+
+if (typeof window !== 'undefined') {
+    // Check if the code is running in a browser environment
+    localUserID = localStorage.getItem('afriTechUserID'); // Retrieve user ID from local storage
+    userIdFromLocalStorage = localUserID ? JSON.parse(localUserID) : null; // Parse user ID from local storage
+} else {
+    // Handle the case where localStorage is not available (e.g., server-side rendering)
+    localUserID = null;
+    userIdFromLocalStorage = null;
+}
+
   const dispatch = useDispatch(); // Get dispatch function from useDispatch hook
 
   // Local state
@@ -85,7 +99,7 @@ export default function Multistep() {
         newData.favourites = [""]
         newData.financing = [""]
         newData.reviews = [""]
-        newData.paymentCompleted = [""]
+        newData.paymentCompletedArray = [""]
         newData.dateOfBirth = new Date(newData.dateOfBirth).getTime();
         dispatch(updateUserFormEntries(JSON.stringify(newData, null, 2)));
 

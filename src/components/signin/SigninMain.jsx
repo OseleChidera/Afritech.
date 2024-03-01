@@ -34,7 +34,10 @@ export default function SigninMain ({ nextStep, isDisabled }){
             else {
                 toast.success("Login successful home page", { onOpen: () => {
                     redirect("/main/home")
-                    localStorage.setItem('afriTechUserID', JSON.stringify(`${userId}`))
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem('afriTechUserID', JSON.stringify(`${userId}`));
+                    }
+                    
                 }});
                 console.error('Error fetching data:', error) 
             }

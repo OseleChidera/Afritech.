@@ -8,20 +8,21 @@ export default function PendingPayment() {
     const data = useSelector((state) => state.user.data);
     const firebaseUserInfo = useSelector((state) => state.user.firebaseUserInfo);
     // State to store payment array without empty strings
-    const [arrayWithoutEmptyStrings, setArrayWithoutEmptyStrings] = useState();
+    const [arrayWithoutEmptyStrings, setArrayWithoutEmptyStrings] = useState([]);
 
     // Update arrayWithoutEmptyStrings when userData.paymentCompleted changes
     useEffect(() => {
-        setArrayWithoutEmptyStrings(data?.paymentCompleteArray?.filter(arrayItem => typeof arrayItem === "object" && arrayItem !== null))
-    }, [data?.userData?.paymentCompleted])
+        setArrayWithoutEmptyStrings(data?.userData?.paymentCompletedArray?.filter(arrayItem => typeof arrayItem === "object" && arrayItem !== null))
+    }, [data?.userData?.paymentCompletedArray])
 
     return (
         <div>
+            <div className="">
             {
                 // Check if user account is verified
                 firebaseUserInfo?.accountVerified ? (
                     // Check if payment array is not empty
-                    data?.paymentArray.length !== 0 ? (
+                    arrayWithoutEmptyStrings?.length !== 0 ? (
                         <div className="p-[20px] flex flex-col gap-4 pb-[120px]">
                             {/* Map through arrayWithoutEmptyStrings and render PaymentCompleteComponent for each item */}
                             {arrayWithoutEmptyStrings?.map(item => (
@@ -45,8 +46,8 @@ export default function PendingPayment() {
                     <div className="absolute top-0 left-0 w-full h-screen">
                         <UnauthorizedAccess />
                     </div>
-                )
-            }
+                )}
+            </div>
         </div>
     );
 }

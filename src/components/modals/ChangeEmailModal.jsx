@@ -41,7 +41,10 @@ export default function ChangeEmailModal() {
                 await sendEmailVerification(auth.currentUser);
                 // Sign out the user
                 await auth.signOut();
-                localStorage.removeItem('afriTechUserID');
+                if (typeof window !== 'undefined') {
+                    localStorage.removeItem('afriTechUserID');
+                }
+                
                 // Redirect to sign-in page
                 router.push("/signin");
             } catch (error) {
@@ -49,7 +52,10 @@ export default function ChangeEmailModal() {
                 if (error.code === 'auth/requires-recent-login') {
                     // Sign out the user if email change requires recent login
                     await auth.signOut();
-                    localStorage.removeItem('afriTechUserID');
+                    if (typeof window !== 'undefined') {
+                        localStorage.removeItem('afriTechUserID');
+                    }
+                    
                     closeModal();
                     router.push("/signin");
                     toast.error('requires-recent-login');

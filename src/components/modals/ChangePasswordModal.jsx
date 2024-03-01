@@ -21,7 +21,10 @@ export default function ChangePasswordModal() {
 
       try {
         await auth.signOut();
-        localStorage.removeItem('afriTechUserID')
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('afriTechUserID');
+      }
+      
         toast.success("logout successful")
         closeModal()
         toast.success("You can now sign in again")

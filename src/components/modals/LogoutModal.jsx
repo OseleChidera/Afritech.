@@ -21,7 +21,10 @@ export default function LogoutModal() {
     if (confirmationAlert) {
       try {
         await auth.signOut();
-        localStorage.removeItem('afriTechUserID');
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('afriTechUserID');
+      }
+      
         // toast.success("logout successful", { autoClose: 300});
         closeModal();
         toast.success("You can choose to sign in again", { autoClose: 300, onOpen: () => router.push("/signin")});
