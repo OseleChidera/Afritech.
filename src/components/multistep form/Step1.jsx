@@ -42,9 +42,7 @@ const Step1 = ({ data, next }) => {
         }
         
         createUserWithEmailAndPassword(auth, values.email, values.password)
-            // console.log("createUserWithEmailAndPassword" + JSON.stringify(auth, null, 2))
-
-            .then((userCredential) => {
+           .then((userCredential) => {
                 
                 console.log(userCredential)
                 const userProfile = userCredential.user;
@@ -54,16 +52,10 @@ const Step1 = ({ data, next }) => {
                 setDoc(customDocRef, { email: values.email });
                 console.log('user id: ' + userProfile.uid)
                 dispatch(setUserId(userProfile.uid))
-                // console.log('after dispatchhhhhhhhhhhhhhhhhhhhhh')
-
-
                 //save the user id in local storage on signup
                 if (typeof window !== 'undefined') {
                     localStorage.setItem('afriTechUserID', JSON.stringify(`${userProfile.uid}`));
                 }
-                
-                // console.log("auth.currentUser" + " " + JSON.stringify(auth.currentUser, null, 2))
-
             })
             .catch((error) => {
                 if (error.code == 'auth/email-already-in-use') {

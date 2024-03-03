@@ -49,41 +49,23 @@ const Product = ({ id, name, qty, price, productID, favouriteItemID, image, prod
 
   function addItemToCartFromProduct() {
     setIsInCart(!isInCart);
-    
     addItemsToCart(id, 1, userID, setProductCarTID, collectionString);
-    // console.log("productCartIDDDDDDDDD" + productCartID);
   }
 
   function removeFromFavourites() {
-    // console.log("removeFromFavourites got called" );
     removeItemFromFavourites(id, userID, collectionString)
   }
 
   function addtoFavourites() {
-    // setIsFavourited(!isFavourited);
-    // console.log("productID", id)
     addItemsToFavourites(id, userID, setProductFavouriteID, collectionString);
-    // console.log("ProductFavouriteID" + setProductFavouriteID);
-  }
-
-  function removeProductFromCart(productCartID) {
-    if (productCartID == "") {
-      return;
-    }
-    removeItemFromCart('Products' ,id, favouriteItemID, userID);
-    setIsInCart(!isInCart);
   }
 
 
-  // console.log('favouritedArray ', productObj?.userFavourited)
 
   let isFavourited = productObj?.userFavourited.includes(userID);
   // console.log("check if the user favourited the product", isFavourited)
 
 
-  useEffect(()=>{
-     
-  },[])
   
   return (
     <div className=" relative  rounded-xl  bg-white w-full   border-[0.02px] border-black">

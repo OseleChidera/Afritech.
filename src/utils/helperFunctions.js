@@ -170,68 +170,55 @@ export async function deleteReview(productID, reviewItemID, collectionString) {
 
 
 
+
 export async function addItemsToCart(productId, productQuantity = 1, userID, setAddToCartQty = undefined, collectionStringValue) {
     // console.log(productId, productQuantity, userID);
     let cartItemID = generateRandomID(20);
     try {
         const productDocRef = doc(database, collectionStringValue, productId);
         const currentUserRef = doc(database, 'Users', userID);
-
         await runTransaction(database, async (transaction) => {
             const currentUserSnapshot = await getDoc(currentUserRef);
             const productDocSnapshot = await getDoc(productDocRef);
-
             if (currentUserSnapshot.exists() && productDocSnapshot.exists()) {
                 const productData = productDocSnapshot.data();
                 const updatedQty = Math.max(productData.qty - productQuantity, 0);
-
                 // Update product quantity in stock
                 transaction.update(productDocRef, { qty: updatedQty });
-
                 // Get existing cart array or create new if it doesn't exist
                 const existingCart = currentUserSnapshot.data().cart || [];
 
                 // Add the product to the cart based on productQuantity
                 for (let i = 0; i < productQuantity; i++) {
-
                     const cartItem = {
                         ...productData,
                         cartItemID,
                         productID: productId,
                         collectionString: collectionStringValue
                     };
-                    delete cartItem.qty; // Remove quantity from cart item
-
                     // Remove unnecessary fields from cart item
+                    delete cartItem.qty; // Remove quantity from cart item
                     delete cartItem.link;
                     delete cartItem.reviews;
                     delete cartItem.userFavourited;
                     delete cartItem.description;
-
                     // Remove last three images from image gallery
                     cartItem.imageGalleryImages = cartItem.imageGalleryImages.slice(0, -3);
-
                     existingCart.push(cartItem);
                 }
-
                 // Filter out any null or non-object elements from the cart array
                 const filteredCart = existingCart.filter(item => typeof item === 'object' && item !== null);
-
                 // Update user document with modified cart
                 transaction.update(currentUserRef, { cart: filteredCart });
-
                 // Call the setter function if provided
                 if (setAddToCartQty) {
                     setAddToCartQty(1);
                 }
-
                 // Success message
                 toast.success(`${productQuantity} item(s) added to cart`);
-
                 // If the product is out of stock
-                if (updatedQty === 0) {
-                    toast.info(`Current stock has been depleted. Please come back later.`);
-                }
+                if (updatedQty === 0) toast.info(`Current stock has been depleted. Please come back later.`);
+                
             } else {
                 // User or product not found
                 console.log("Document not found");
@@ -244,6 +231,8 @@ export async function addItemsToCart(productId, productQuantity = 1, userID, set
         toast.error(`Failed to add item to cart: ${error.message}`);
     }
 }
+
+
 
 export async function removeItemFromCart(productCollectionString, productID, cartItemID, userID) {
     // console.log("productID ", productID)
@@ -484,11 +473,8 @@ export async function getUserFinancingData(userID, userDataSetterFn, cartDataSet
 
 
 export async function updateFinancingItemPrice(orderID, amountPayable, userID, paymentReciever) {
-    // console.log(orderID, amountPayable, userID);
-
     try {
         const currentUserRef = doc(database, 'Users', userID);
-
         await runTransaction(database, async (transaction) => {
             const currentUserSnapshot = await getDoc(currentUserRef);
 
@@ -496,10 +482,8 @@ export async function updateFinancingItemPrice(orderID, amountPayable, userID, p
                 // Get the existing array from the document
                 let existingArray = currentUserSnapshot.data().financing || [];
                 let paymentCompletedArr = currentUserSnapshot.data().paymentCompletedArray || [];
-
                 // Find the item in the array with the matching orderID
                 const itemToUpdate = existingArray.find(order => order.orderId === orderID);
-
                 if (itemToUpdate) {
                     // Update the leftToPay value of the found item
                     if (itemToUpdate.leftToPay - amountPayable === 0) {
@@ -509,7 +493,6 @@ export async function updateFinancingItemPrice(orderID, amountPayable, userID, p
                         existingArray = existingArray.filter(order => order.orderId !== orderID)
                         await updateDoc(currentUserRef, { paymentCompletedArray: paymentCompletedArr });
                         await updateDoc(currentUserRef, { financing: existingArray });
-
                     }
                     else {
                         itemToUpdate.leftToPay -= amountPayable;
@@ -543,18 +526,41 @@ export function calculateTotalPrice(basket) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function removeItemFromCartOnCheckout(existingCartItems, userID, setItemsToCheckout, basket) {
-    // console.log("basket ", basket);
-    // console.log("existingCartItems ", existingCartItems);
-    // console.log("userID ", userID);
-    // const totalPriceOfBasketItems = calculateTotalPrice(basket);
+
+  
+    console.log("basket ", basket);
+    console.log("existingCartItems ", existingCartItems);
+    console.log("userID ", userID);
+    const totalPriceOfBasketItems = calculateTotalPrice(basket);
     try {
         const userRef = doc(database, 'Users', userID);
         const userDocument = await getDoc(userRef);
+
         if (userDocument.exists()) {
             const cartArray = existingCartItems;
             const financingArray = userDocument.data().financing || [];
             console.table("cartArray ", cartArray);
+
             // Update the document with the modified cart and financing arrays
             const newOrderid = generateRandomID(5);
             await updateDoc(userRef, { cart: cartArray });
@@ -580,6 +586,21 @@ export async function removeItemFromCartOnCheckout(existingCartItems, userID, se
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export function extractLastName(fullName) {
     // Split the full name by whitespace
     const nameParts = fullName.split(' ');
@@ -595,8 +616,7 @@ export function extractLastName(fullName) {
 
 
 export async function sendEmail(emailData) {
-    // console.log("send email function was called")
-    // console.log("emailData: " + JSON.stringify(emailData, null, 2))
+    //send a post request to a node js express server to send an email containing users order information
     try {
         const response = await fetch('https://afritech-sendgrid-email-server.onrender.com/send-email', {
             method: 'POST',
@@ -612,4 +632,34 @@ export async function sendEmail(emailData) {
         console.error('Error sending email:', error.message, error);
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

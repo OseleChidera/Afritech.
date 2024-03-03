@@ -1,5 +1,4 @@
-// Import necessary dependencies
-'use client'; 
+'use client';
 import React, { useState, useContext, useEffect } from 'react'; // Import React and necessary hooks
 import { collection, addDoc, doc, setDoc, updateDoc, onSnapshot, getDoc } from "firebase/firestore"; // Import Firestore methods
 import { database, storage } from '../../../../firebaseConfig'; // Import Firestore database and Firebase storage
@@ -15,29 +14,23 @@ import { setLoading, incrementSignup, decrementSignup, incrementSignin, decremen
 import { useRouter } from 'next/navigation'; // Import useRouter hook from Next.js for routing
 
 export default function Multistep() {
-  // Redux state management
+  const dispatch = useDispatch(); // Get dispatch function from useDispatch hook
   const pageindex = useSelector((state) => state.user.signupIndex); // Get current page index from Redux store
   const userFormEntries = useSelector((state) => state.user.userFormEntries); // Get user form entries from Redux store
-  // Get user ID from local storage
-  // Local storage
-let localUserID;
-let userIdFromLocalStorage;
+  const [data, setData] = useState(userFormEntries); // Initialize local state for form data
+  const [animationCounter, setAnimationCounter] = useState(0); // Initialize local state for animation counter
+  let localUserID;
+  let userIdFromLocalStorage;
 
-if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     // Check if the code is running in a browser environment
     localUserID = localStorage.getItem('afriTechUserID'); // Retrieve user ID from local storage
     userIdFromLocalStorage = localUserID ? JSON.parse(localUserID) : null; // Parse user ID from local storage
-} else {
+  } else {
     // Handle the case where localStorage is not available (e.g., server-side rendering)
     localUserID = null;
     userIdFromLocalStorage = null;
-}
-
-  const dispatch = useDispatch(); // Get dispatch function from useDispatch hook
-
-  // Local state
-  const [data, setData] = useState(userFormEntries); // Initialize local state for form data
-  const [animationCounter, setAnimationCounter] = useState(0); // Initialize local state for animation counter
+  }
 
   // Function to upload NIN image to Firebase storage
   async function uploadNinImage(image) {

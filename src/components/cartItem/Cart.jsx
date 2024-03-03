@@ -20,9 +20,7 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
     const [basketTotalCost, setBasketTotalCost] = useState(null);
     const [newArray, setNewArray] = useState(null);
     const [userData , setUserData] = useState(null)
-    const firebaseUserInfo = useSelector((state) => state.user.firebaseUserInfo);
     const data = useSelector((state) => state.user.data);
-    const [arrayWithoutEmptyStrings, setArrayWithoutEmptyStrings] = useState([]);
     const [fetchedData, setFetchedData] = useState({ // Local state for fetched data
         userData: null,
         productsArray: null,
@@ -155,4 +153,41 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
         </div>
     );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
