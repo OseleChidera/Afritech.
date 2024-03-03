@@ -44,7 +44,7 @@ export default function page() {
             }`}
             onClick={() => {dispatch(setPaymentTabIndex(0))}}
           >
-            <div className={`w-7 h-7 flex items-center rounded-full justify-center border absolute -left-1 -top-1 ${paymentTabIndex == 0 ? "border-white bg-[#695acd] text-white " : "border-[#695acd] bg-white text-[#695acd] "}`}>
+            <div className={`w-7 h-7 flex items-center rounded-full justify-center border absolute -left-3 -top-3 ${paymentTabIndex == 0 ? "border-white bg-[#695acd] text-white " : "border-[#695acd] bg-white text-[#695acd] "}`}>
               {filteredArray?.length}
             </div>
             Pending Payment(s)
@@ -57,7 +57,7 @@ export default function page() {
             }`}
             onClick={() => {dispatch(setPaymentTabIndex(1))}}
           >
-            <div className={`w-7 h-7 flex items-center rounded-full justify-center border absolute -right-1 -top-1 ${paymentTabIndex === 1 ? "border-white bg-[#695acd] text-white " : "border-[#695acd] bg-white text-[#695acd] "}`}>
+            <div className={`w-7 h-7 flex items-center rounded-full justify-center border absolute -right-3 -top-3 ${paymentTabIndex === 1 ? "border-white bg-[#695acd] text-white " : "border-[#695acd] bg-white text-[#695acd] "}`}>
               {filteredCompletedArray?.length}
             </div>
             Completed Payment(s)

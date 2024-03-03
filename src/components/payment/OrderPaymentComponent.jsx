@@ -34,7 +34,6 @@ export default function OrderPaymentComponent({ orderID, productsArray, leftToPa
     };
 
 
-    useEffect(()=>{console.log("the tab page index changed: ", paymentPageTabIndex)},[paymentPageTabIndex])
     function findOrder(orderID){
         let order = firebaseUserInfo?.financing?.find((order)=> order.orderId == orderID);
         return order;
