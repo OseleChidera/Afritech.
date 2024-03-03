@@ -123,6 +123,7 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
     return (
         <div className="relative z-10">
             <div className="cart relative flex-end" onClick={() => showCartFn()}>
+                <span className='text-sm absolute -right-1 -top-2 z-10'>{newArray?.length}</span>
                 <Image src={cartIcon} width={25} height={25} alt='cart icon'/>
             </div>
             <div className={`location-btn ${showCart ? 'show-cart flex flex-col gap-2' : "hidden"} w-[75vw] absolute top-10 right-0 border border-black rounded-sm p-2 bg-[#f9f9f5]`}>

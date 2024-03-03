@@ -32,7 +32,8 @@ export const userSlice = createSlice({
         modalToshow: "",
         authCallbackUser: null,
         userFinancingData: [],
-        data: {}
+        data: {},
+        paymentTabIndex: 0,
     },
     reducers: {
         setUserId: (state, action) => {
@@ -111,11 +112,15 @@ export const userSlice = createSlice({
         },
         setData: (state, action) => {
             state.data = action.payload
+        },
+        setPaymentTabIndex: (state, action) => {
+            console.log("paymentTabIndex payload: ", action.payload)
+            state.paymentTabIndex = action.payload
         }
     }
 })
 
-export const {setUserId,removeUserId,incrementSignup,decrementSignup,incrementAnimationCounter,decrementAnimationCounter,setSignupIndex,incrementSignin,decrementSignin,incrementSigninToStartMultistep,incrementSigninByAmmount,updateUserFormEntries,setUserData,removeUserData ,grantStorageAccess,setCurrentfirebaseUserInfo,showModalDispachFn,hideModalDispachFn,setModalToshow,setAuthCallbackUser,setuserFavouritesData,setData } = userSlice.actions;
+export const {setUserId,removeUserId,incrementSignup,decrementSignup,incrementAnimationCounter,decrementAnimationCounter,setSignupIndex,incrementSignin,decrementSignin,incrementSigninToStartMultistep,incrementSigninByAmmount,updateUserFormEntries,setUserData,removeUserData ,grantStorageAccess,setCurrentfirebaseUserInfo,showModalDispachFn,hideModalDispachFn,setModalToshow,setAuthCallbackUser,setuserFavouritesData,setData , setPaymentTabIndex } = userSlice.actions;
 
 export default userSlice.reducer;
 

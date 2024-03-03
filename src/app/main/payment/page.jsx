@@ -8,12 +8,14 @@ import { useSelector, useDispatch } from "react-redux"; // Import useSelector an
 import OrderPaymentComponentSkeleton from '@/components/loading skeleton/OrderPaymentComponentSkeleton'; // Import OrderPaymentComponentSkeleton component
 import PendingPayment from '@/components/payment/PendingPayment'; // Import PendingPayment component
 import PaymentComplete from '@/components/payment/PaymentComplete'; // Import PaymentComplete component
+import { setPaymentTabIndex } from '@/redux/user';
 
 export default function page() {
-  // Redux state management
+  const dispatch= useDispatch()
   const firebaseUserInfo = useSelector((state) => state.user.firebaseUserInfo); // Get firebaseUserInfo from Redux store
  
   const data = useSelector((state) => state.user.data); // Get data from Redux store
+  const paymentTabIndex = useSelector((state) => state.user.paymentTabIndex); // Get data from Redux store
   const [buttonsState, setButtonsState] = useState(0); // Local state for buttonsState
   const [filteredArray, setFilteredArray] = useState([]); // Local state for filteredArray
 
@@ -23,6 +25,8 @@ export default function page() {
     setFilteredArray(filtered);
   }, [data?.userData]);
 
+  
+
   // console.log("userData: " , data?.userData?.financing , data?.userData?.paymentCompleted)
   return (
     <>
@@ -31,21 +35,21 @@ export default function page() {
           {/* Buttons for toggling between pending and completed payments */}
           <button
             className={`relative w-full p-2 rounded-lg rounded-br-none rounded-bl-none ${
-              buttonsState === 0
+              paymentTabIndex === 0
                 ? "text-[#695acd] bg-white border border-[#695acd] border-b-0"
                 : "text-white bg-[#695acd] border-none"
             }`}
-            onClick={() => setButtonsState(0)}
+            onClick={() => {dispatch(setPaymentTabIndex(0))}}
           >
             Pending Payment(s)
           </button>
           <button
             className={`relative w-full p-2 rounded-lg rounded-br-none rounded-bl-none ${
-              buttonsState === 1
+              paymentTabIndex === 1
                 ? "text-[#695acd] bg-white border border-[#695acd] border-b-0"
                 : "text-white bg-[#695acd] border-none"
             }`}
-            onClick={() => setButtonsState(1)}
+            onClick={() => {dispatch(setPaymentTabIndex(1))}}
           >
             Completed Payment(s)
           </button>
@@ -53,7 +57,7 @@ export default function page() {
 
         {/* Conditional rendering based on buttonsState */}
         {data?.userData?.financing || data?.userData?.paymentCompleted ? 
-          (buttonsState === 0 ? <PendingPayment /> : <PaymentComplete />) : 
+          (paymentTabIndex == 0 ? <PendingPayment /> : <PaymentComplete />) : 
           <div className="p-[20px] flex flex-col gap-4 pb-[120px]">
             {/* Display loading skeleton if data is not available */}
             {[...new Array(5)].map((item, index) => (

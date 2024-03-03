@@ -472,7 +472,7 @@ export async function getUserFinancingData(userID, userDataSetterFn, cartDataSet
 
 
 
-export async function updateFinancingItemPrice(orderID, amountPayable, userID, paymentReciever) {
+export async function updateFinancingItemPrice(orderID, amountPayable, userID, paymentReciever,tabIndexSetter ) {
     try {
         const currentUserRef = doc(database, 'Users', userID);
         await runTransaction(database, async (transaction) => {
@@ -484,26 +484,24 @@ export async function updateFinancingItemPrice(orderID, amountPayable, userID, p
                 let paymentCompletedArr = currentUserSnapshot.data().paymentCompletedArray || [];
                 // Find the item in the array with the matching orderID
                 const itemToUpdate = existingArray.find(order => order.orderId === orderID);
-                if (itemToUpdate) {
+                
                     // Update the leftToPay value of the found item
-                    if (itemToUpdate.leftToPay - amountPayable === 0) {
+                    if (itemToUpdate && itemToUpdate.leftToPay - amountPayable === 0) {
                         // console.log("paymentCompletedArr ", paymentCompletedArr)
                         paymentCompletedArr.push(itemToUpdate)
                         // console.log("paymentCompletedArr after push", paymentCompletedArr)
                         existingArray = existingArray.filter(order => order.orderId !== orderID)
                         await updateDoc(currentUserRef, { paymentCompletedArray: paymentCompletedArr });
                         await updateDoc(currentUserRef, { financing: existingArray });
+                        toast.success(`Your payment of ₦${formatNumberWithCommas(amountPayable)} to ${paymentReciever} was made successfully`);
+                        
                     }
                     else {
                         itemToUpdate.leftToPay -= amountPayable;
                         // Update the document with the modified array
                         await updateDoc(currentUserRef, { financing: existingArray });
                     }
-                    toast.success(`Your payment of ₦${formatNumberWithCommas(amountPayable)} to ${paymentReciever} was made successfully`);
-                } else {
-                    console.log("Item with the given orderID not found");
-                    toast.error(`Item with the given orderID not found`);
-                }
+                    
             } else {
                 console.log("Document not found");
                 toast.error(`Document not found`);

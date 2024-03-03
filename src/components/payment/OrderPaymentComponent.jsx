@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { PaystackButton } from 'react-paystack';
 import { useSelector, useDispatch } from "react-redux";
 import PaymentProduct from "./PaymentProduct";
 import { formatNumberWithCommas, updateFinancingItemPrice, sendEmail } from "@/utils/helperFunctions";
+import { setPaymentTabIndex } from "@/redux/user";
 
-export default function OrderPaymentComponent({ orderID, productsArray, leftToPay, financingTotal }) {
+export default function OrderPaymentComponent({ orderID, productsArray, leftToPay, financingTotal}) {
+    const dispatch = useDispatch()
     const firebaseUserInfo = useSelector((state) => state.user.firebaseUserInfo);
     const data = useSelector((state) => state.user.data);
     const userID = useSelector((state) => state.user.userID);
 
     const [amount, setAmount] = useState("");
     const [amountLeftToPay, setAmountLeftToPay] = useState("");
+    const [paymentPageTabIndex , setPaymentPageTabIndex] = useState(0)
 
     const config = {
         reference: new Date().getTime().toString(),
@@ -30,6 +33,8 @@ export default function OrderPaymentComponent({ orderID, productsArray, leftToPa
         },
     };
 
+
+    useEffect(()=>{console.log("the tab page index changed: ", paymentPageTabIndex)},[paymentPageTabIndex])
     function findOrder(orderID){
         let order = firebaseUserInfo?.financing?.find((order)=> order.orderId == orderID);
         return order;
@@ -43,8 +48,9 @@ export default function OrderPaymentComponent({ orderID, productsArray, leftToPa
         config.metadata.custom_fields[0].value = `Order #${orderNumber} payment`;
     }
 
-    async function handlePaystackSuccessAction(reference){
-        await updateFinancingItemPrice(orderID, amount, userID, config.email, setAmountLeftToPay);
+    async function handlePaystackSuccessAction(reference , setPaymentPageTabIndex){
+        
+       await updateFinancingItemPrice(orderID, amount, userID, config.email, setAmountLeftToPay);
         sendEmail({
             fullName: data.userData.fullname,
             userEmail: data.userData.email,
