@@ -18,11 +18,14 @@ export default function page() {
   const paymentTabIndex = useSelector((state) => state.user.paymentTabIndex); // Get data from Redux store
   const [buttonsState, setButtonsState] = useState(0); // Local state for buttonsState
   const [filteredArray, setFilteredArray] = useState([]); // Local state for filteredArray
+  const [filteredCompletedArray, setFilteredCompletedArray] = useState([]); // Local state for filteredArray
 
   // useEffect hook to filter financing data
   useEffect(() => {
-    const filtered = data?.userData?.financing.filter((arrayItem) => typeof arrayItem === "object");
-    setFilteredArray(filtered);
+    const filteredFinancingArray = data?.userData?.financing.filter((arrayItem) => typeof arrayItem === "object");
+    const filteredFinancingCompletedArray = data?.userData?.paymentCompletedArray.filter((arrayItem) => typeof arrayItem === "object");
+    setFilteredArray(filteredFinancingArray);
+    setFilteredCompletedArray(filteredFinancingCompletedArray);
   }, [data?.userData]);
 
   
@@ -41,6 +44,9 @@ export default function page() {
             }`}
             onClick={() => {dispatch(setPaymentTabIndex(0))}}
           >
+            <div className={`w-7 h-7 flex items-center rounded-full justify-center border absolute -left-1 -top-1 ${paymentTabIndex == 0 ? "border-white bg-[#695acd] text-white " : "border-[#695acd] bg-white text-[#695acd] "}`}>
+              {filteredArray?.length}
+            </div>
             Pending Payment(s)
           </button>
           <button
@@ -51,6 +57,9 @@ export default function page() {
             }`}
             onClick={() => {dispatch(setPaymentTabIndex(1))}}
           >
+            <div className={`w-7 h-7 flex items-center rounded-full justify-center border absolute -right-1 -top-1 ${paymentTabIndex === 1 ? "border-white bg-[#695acd] text-white " : "border-[#695acd] bg-white text-[#695acd] "}`}>
+              {filteredCompletedArray?.length}
+            </div>
             Completed Payment(s)
           </button>
         </div>

@@ -22,7 +22,7 @@ export default function PendingPayment() {
                 {firebaseUserInfo?.accountVerified ? (
                     // Check if there are pending payments to display
                     arrayWithoutEmptyStrings?.length !== 0 ? (
-                        <div className="p-[20px] flex flex-col gap-4 pb-[120px]">
+                        <div className="p-[20px] flex flex-col gap-4 mb-[120px] max-h-[65vh] overflow-auto ">
                             {/* Render the OrderPaymentComponent for each pending payment */}
                             {arrayWithoutEmptyStrings?.map(item => (
                                 <OrderPaymentComponent

@@ -23,7 +23,7 @@ export default function PendingPayment() {
                 firebaseUserInfo?.accountVerified ? (
                     // Check if payment array is not empty
                     arrayWithoutEmptyStrings?.length !== 0 ? (
-                        <div className="p-[20px] flex flex-col gap-4 pb-[120px]">
+                        <div className="p-[20px] flex flex-col gap-4 mb-[120px] max-h-[65vh] overflow-auto ">
                             {/* Map through arrayWithoutEmptyStrings and render PaymentCompleteComponent for each item */}
                             {arrayWithoutEmptyStrings?.map(item => (
                                 <PaymentCompleteComponent
