@@ -494,7 +494,7 @@ export async function updateFinancingItemPrice(orderID, amountPayable, userID, p
                         await updateDoc(currentUserRef, { paymentCompletedArray: paymentCompletedArr });
                         await updateDoc(currentUserRef, { financing: existingArray });
                         toast.success(`Your payment of ₦${formatNumberWithCommas(amountPayable)} to ${paymentReciever} was made successfully`);
-                        
+                        toast.info(`You have completed payment for order numbered #${itemToUpdate.orderId} it has been moved to the 'payment completed tab'`);
                     }
                     else {
                         itemToUpdate.leftToPay -= amountPayable;
