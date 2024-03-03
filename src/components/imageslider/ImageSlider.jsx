@@ -38,7 +38,7 @@ const divStyle = {
                 ))
             ) : (
                 // Render loading skeleton if popularProductsArray is not available
-               <ImageSliderLoadingSkeleton />
+                [...new Array(3)].map((product, index) => <ImageSliderLoadingSkeleton index={index}/>)
             )}
         </Slide>
     );

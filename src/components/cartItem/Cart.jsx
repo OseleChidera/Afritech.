@@ -123,8 +123,11 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
     
     return (
         <div className="relative z-10">
-            <div className={`cart relative flex-end ${newArray?.length > 0 ? 'animate-pulse' : ''}`} onClick={() => showCartFn()}>
-                <span className="text-sm absolute -right-1 -top-2 z-10 ">{newArray?.length}</span>
+            <div className="cart relative flex-end" onClick={() => showCartFn()}>
+                
+                <div className={`w-5 h-5 flex items-center rounded-full justify-center border -right-2 absolute -top-2  border-white bg-[#695acd] text-white `}>
+                <span className={`${newArray?.length > 0 ? "animate-pulse" : " "}`}>{newArray?.length}</span>
+            </div>
                 <Image src={cartIcon} width={25} height={25} alt='cart icon'/>
             </div>
             <div className={`location-btn ${showCart ? 'show-cart flex flex-col gap-2' : "hidden"} w-[75vw] absolute top-10 right-0 border border-black rounded-sm p-2 bg-[#f9f9f5]`}>

@@ -31,7 +31,7 @@ const Location = () => {
 
 
   return (
-    <div className='flex items-center justify-between border border-black w-full p-2 py-4 sticky z-10 top-0 bg-[#695acd] text-white'>
+    <div className='flex items-center justify-between border border-black w-full p-4 py-4 sticky z-10 top-0 bg-[#695acd] text-white'>
         <div className="location flex items-center gap-1 relative ">
         <span className='capitalize underline underline-offset-1'>{data?.userData?.locationOption}</span>
         </div>
