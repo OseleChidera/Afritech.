@@ -19,7 +19,6 @@ import { setupAuthObserver } from "../../../../firebaseAuth";
 import { getUserData, fetchProductsData } from '@/utils/helperFunctions'; // Import getUserData and fetchProductsData functions from helperFunctions module
 import { setCurrentfirebaseUserInfo, setUserId, setLoading, setAuthCallbackUser, setProductsData, setPopularProductsData, setuserCartData, setuserFavouritesData, setuserFinancingData, setData } from '../../../redux/user'; // Import action creators from user Redux slice
 import { toast } from "react-toastify";
-import { useRouter, usePathname } from "next/navigation"; 
 
 export default function Page({ params }) {
     const dispatch = useDispatch(); 
