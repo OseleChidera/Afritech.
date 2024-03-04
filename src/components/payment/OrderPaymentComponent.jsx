@@ -3,8 +3,10 @@ import { usePaystackPayment } from "react-paystack";
 import { PaystackButton } from 'react-paystack';
 import { useSelector, useDispatch } from "react-redux";
 import PaymentProduct from "./PaymentProduct";
-import { formatNumberWithCommas, updateFinancingItemPrice, sendEmail } from "@/utils/helperFunctions";
+import { formatNumberWithCommas, updateFinancingItemPrice, sendEmail , updateQtyAfterCheckoutOnDelete} from "@/utils/helperFunctions";
 import { setPaymentTabIndex } from "@/redux/user";
+import Image from "next/image";
+import trashIcon from "../../../public/icons/trashIcon.svg"
 
 export default function OrderPaymentComponent({ orderID, productsArray, leftToPay, financingTotal}) {
     const dispatch = useDispatch()
@@ -62,7 +64,13 @@ export default function OrderPaymentComponent({ orderID, productsArray, leftToPa
         });
         setAmount('');
     };
-
+async function deleteOrderAfterCheckout(){
+    console.log("deleteOrderAfterCheckout function ran" , financingTotal , leftToPay)
+    productsArray.forEach(async (item) => {
+        // Update qty for the product in the corresponding collection
+        await updateQtyAfterCheckoutOnDelete(item.collectionString, item.productID , userID , orderID);
+      });
+}
     const handlePaystackCloseAction = () => {
         console.log('closed');
     }
@@ -110,31 +118,36 @@ export default function OrderPaymentComponent({ orderID, productsArray, leftToPa
                     <div className="flex flex-row justify-end ">
                         <div id="percentageValues" className="flex gap-3 items p-2 ">
                             <button
-                                className={`px-2  bg-white text-[#695acd] capitalize text-center py-1 rounded-md w-full ${amount > leftToPay ? "opacity-[0.5]" : ""}`}
+                                className={`px-2  bg-white text-[#695acd] capitalize text-center py-1 rounded-md w-full text-sm ${amount > leftToPay ? "opacity-[0.5]" : ""}`}
                                 onClick={() => setAmount(leftToPay / 2)}
                             >
                                 50%
                             </button>
                             <button
-                                className={`px-2  bg-white text-[#695acd] capitalize text-center py-1 rounded-md w-full ${amount > leftToPay ? "opacity-[0.5]" : ""}`}
+                                className={`px-2  bg-white text-[#695acd] capitalize text-center py-1 rounded-md w-full text-sm ${amount > leftToPay ? "opacity-[0.5]" : ""}`}
                                 onClick={() => setAmount(leftToPay)}
                             >
                                 100%
                             </button>
                         </div>
-                        <div className="info p-2 text-black flex flex-col items-center justify-center">
+                        <div className="info text-black flex items-center justify-center gap-3">
                             <PaystackButton {...componentProps}>
                                 <div
-                                    className={`px-5  bg-white text-[#695acd] capitalize text-center py-1 rounded-md w-full ${amount > leftToPay ? "opacity-[0.5]" : ""}`}
+                                    className={`px-2  bg-green-500 text-white capitalize text-center py-1 rounded-md w-full text-sm ${amount > leftToPay ? "opacity-[0.5]" : ""}`}
                                     onClick={() => configurePayment(orderID)}
                                     disabled={amount > leftToPay || !amount}
                                 >
                                     Pay
                                 </div>
-                            </PaystackButton>
                             {amount > leftToPay && (
                                 <span className="text-xs text-red-700">Exceeds required</span>
                             )}
+                            </PaystackButton>
+                            <button className={`px-2  bg-red-600 text-[#695acd] capitalize text-center py-1 rounded-md w-full text-sm ${financingTotal !== leftToPay  ? "opacity-[0.45]" : ""}`} disabled={financingTotal !== leftToPay ? true : false}
+                                onClick={() => deleteOrderAfterCheckout()}
+                            >
+                                <Image src={trashIcon} alt="trash-icon"/>
+                            </button>
                         </div>
                     </div>
                 </div>

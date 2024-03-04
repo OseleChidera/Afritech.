@@ -525,9 +525,32 @@ export function calculateTotalPrice(basket) {
 
 
 
+export async function updateQtyAfterCheckoutOnDelete(collection, productId, userID, orderID) {
+    // console.log("collection, productId: ", collection, productId)
+    try {
+        const productRef = doc(database, collection, productId);
+        const productSnapshot = await getDoc(productRef);
 
+        const userRef = doc(database, "Users", userID);
+        const userSnapshot = await getDoc(userRef);
+        const confirmationAlert = window.confirm(`Are you really sure you want to delete order #${orderID}`);
+        if (confirmationAlert) {
+            if (productSnapshot.exists() && userSnapshot.exists()) {
+                const otherProducts = userSnapshot.data().financing?.filter((item) => typeof item == "object" && item.orderId !== orderID)
+                await updateDoc(userRef, { financing: otherProducts });
+                await updateDoc(productRef, { qty: productSnapshot.data().qty + 1 });
+                toast.success(`Qty updated for product ${productId} in collection ${collection}`);
+            } else {
+                console.log(`Document for product ${productId} not found in collection ${collection}`);
+            }
+        } else {
+            toast.info(`operation cancelled by user`);
+        }
 
-
+    } catch (error) {
+        console.error("Error updating qty:", error);
+    }
+}
 
 
 

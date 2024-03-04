@@ -10,7 +10,7 @@ import { getUserData, fetchProductsData } from '@/utils/helperFunctions'; // Imp
 import Nav from '@/components/Nav'; // Import Nav component
 import { useRouter, usePathname } from "next/navigation"; // Import useRouter and usePathname hooks from next/navigation
 import { getAuth , onAuthStateChanged } from 'firebase/auth';
-
+import { toast } from "react-toastify";
 
 const layout = ({ children }) => {
   const router = useRouter()
@@ -44,7 +44,12 @@ const layout = ({ children }) => {
             // console.log('User is authenticated ', user.uid);
           } else {
             console.log('User is not authenticated');
-            router.push("/signin")
+            toast.info("User is not currently signed in. Signin again." ,{autoClose: 100,onOpen: ()=> {
+              router.push("/signin")
+              if (typeof window !== 'undefined') {
+                localStorage.removeItem('afriTechUserID');
+            }
+          }})
           }
         });
       } catch (error) {

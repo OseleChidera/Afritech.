@@ -18,11 +18,12 @@ import { useRouter, usePathname } from "next/navigation"; // Import useRouter an
 import { setupAuthObserver } from "../../../../firebaseAuth"; 
 import { getUserData, fetchProductsData } from '@/utils/helperFunctions'; // Import getUserData and fetchProductsData functions from helperFunctions module
 import { setCurrentfirebaseUserInfo, setUserId, setLoading, setAuthCallbackUser, setProductsData, setPopularProductsData, setuserCartData, setuserFavouritesData, setuserFinancingData, setData } from '../../../redux/user'; // Import action creators from user Redux slice
-
-
+import { toast } from "react-toastify";
+import { useRouter, usePathname } from "next/navigation"; 
 
 export default function Page({ params }) {
     const dispatch = useDispatch(); 
+    const router = useRouter();
     const productID = params.id
     const [product, setProduct] = useState({})
     const [productId, setProductId] = useState(productID)
@@ -73,7 +74,14 @@ useEffect(() => {
                 dispatch(setAuthCallbackUser(JSON.stringify(user)));
                 console.log('User is authenticated in mMMmmMM', user.uid);
               } else {
-                console.log('User is not authenticated.mMMmmMM');
+                console.log('User is not authenticated');
+                toast.info("User is not currently signed in. Signin again." ,{autoClose: 100,onOpen: ()=> {
+                    router.push("/signin")
+                    if (typeof window !== 'undefined') {
+                      localStorage.removeItem('afriTechUserID');
+                  }
+                }})
+                
               }
             });
           } catch (error) {

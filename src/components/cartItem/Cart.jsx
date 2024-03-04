@@ -109,7 +109,13 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
                 dispatch(setAuthCallbackUser(JSON.stringify(user)));
                 // console.log('User is authenticated in mMMmmMM', user.uid);
               } else {
-                console.log('User is not authenticated ');
+                console.log('User is not authenticated');
+                toast.info("User is not currently signed in. Signin again." ,{autoClose: 100,onOpen: ()=> {
+                    router.push("/signin")
+                    if (typeof window !== 'undefined') {
+                      localStorage.removeItem('afriTechUserID');
+                  }
+                }})
               }
             });
           } catch (error) {
