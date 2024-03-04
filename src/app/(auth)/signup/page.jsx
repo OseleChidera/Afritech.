@@ -12,7 +12,9 @@ import Step4 from "../../../components/multistep form/Step4.jsx"; // Import Step
 import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from react-redux for Redux state management
 import { setLoading, incrementSignup, decrementSignup, incrementSignin, decrementSignin, updateUserFormEntries, fetchDataByUserId, userData, setUserData, incrementAnimationCounter, decrementAnimationCounter } from '../../../redux/user'; // Import Redux actions and selectors
 import { useRouter } from 'next/navigation'; // Import useRouter hook from Next.js for routing
-import { sendAccountVerificationEmail } from '@/utils/helperFunctions';
+import { sendAccountVerificationEmail , sendUserAccountVerificationPendingEmail} from '@/utils/helperFunctions';
+
+
 
 export default function Multistep() {
   const dispatch = useDispatch(); // Get dispatch function from useDispatch hook
@@ -79,6 +81,7 @@ export default function Multistep() {
     <Step4 data={data} next={handleNextStep} prev={handlePrevStep} />
   ];
 
+
   // Function to create a new firestore document for the user
   async function ApiReq(newData) {
     const docRef = doc(database, "Users", `${userIdFromLocalStorage}`);
@@ -105,8 +108,11 @@ export default function Multistep() {
             redirect("/signin")
            
           } });
-          sendAccountVerificationEmail()
-          // redirect("/signin");
+          if(newData && newData !== null) {
+            sendAccountVerificationEmail()
+            sendUserAccountVerificationPendingEmail(newData)
+          }
+          
         } else {
           console.log('No such document!');
         }

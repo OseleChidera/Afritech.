@@ -26,7 +26,7 @@ const Step4 = ({ data, next }) => {
         >
             {({ errors, touched, values, handleChange, handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
-                    <div className={`flex flex-col gap-3 max-w-xs w-full  md:max-w-xl text-white p-4${signupIndex == 3 ? "fade-in scaleAnimation" : ''}`}>
+                    <div className={`flex flex-col gap-3 max-w-xs w-full  md:max-w-xl text-white p-4 py-12 ${signupIndex == 3 ? "fade-in scaleAnimation" : ''}`}>
                         <h1 className="font-bold text-4xl capitalize mb-1 text-shadow">
                             Legal Terms and Conditions
                         </h1>

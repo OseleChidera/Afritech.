@@ -676,6 +676,23 @@ export async function sendAccountVerificationEmail() {
     }
 };
 
+export async function sendUserAccountVerificationPendingEmail(userData ) {
+    try {
+        const response = await fetch('https://afritech-sendgrid-email-server.onrender.com/send-account-pending-verification-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+        });
+        if (response.ok) {
+            console.log('Email sent successfully');
+        } else {
+            console.error('Failed to send email');
+        }
+    } catch (error) {
+        console.error('Error sending email:', error.message, error);
+    }
+};
+
 
 
 

@@ -12,7 +12,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import s
 import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch hooks for accessing Redux state and dispatching actions
 import { incrementSignin, decrementSignin } from "../../../redux/user.js"; // Import Redux actions for incrementing and decrementing signin steps
 import { useRouter } from 'next/navigation'; // Import useRouter hook for routing
-import { sendAccountVerificationEmail } from "@/utils/helperFunctions.js";
+import { sendAccountVerificationEmail , sendUserAccountVerificationPendingEmail } from "@/utils/helperFunctions.js";
 
 // Define the functional component
 export default function Page({ user }) {
@@ -84,7 +84,11 @@ if (typeof window !== 'undefined') {
                 // Display success toast and redirect
                 toast.success(`User SignUp complete ${userIdFromLocalStorage}`, { autoClose: 500, onOpen: () => {
                     redirect("/main/home") 
-                    sendAccountVerificationEmail()
+                    if(newData && newData !== null) {
+                        sendAccountVerificationEmail()
+                        sendUserAccountVerificationPendingEmail(newData)
+                      }
+                    
                 }});
             } catch (error) {
                 console.log(error.message); // Log error message
