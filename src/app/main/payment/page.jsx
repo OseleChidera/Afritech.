@@ -37,7 +37,7 @@ export default function page() {
         <div className="w-full flex flex-row justify-between p-[20px] gap-4 pb-0">
           {/* Buttons for toggling between pending and completed payments */}
           <button
-            className={`relative w-full p-2 rounded-lg rounded-br-none rounded-bl-none ${
+            className={`relative w-full p-2 rounded-lg rounded-br-none rounded-bl-none text-sm ${
               paymentTabIndex === 0
                 ? "text-[#695acd] bg-white border border-[#695acd] border-b-0"
                 : "text-white bg-[#695acd] border-none"
@@ -50,7 +50,7 @@ export default function page() {
             Pending Payment(s)
           </button>
           <button
-            className={`relative w-full p-2 rounded-lg rounded-br-none rounded-bl-none ${
+            className={`relative w-full p-2 rounded-lg rounded-br-none rounded-bl-none text-sm ${
               paymentTabIndex === 1
                 ? "text-[#695acd] bg-white border border-[#695acd] border-b-0"
                 : "text-white bg-[#695acd] border-none"

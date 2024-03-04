@@ -543,13 +543,14 @@ export function calculateTotalPrice(basket) {
 
 
 
-export async function removeItemFromCartOnCheckout(existingCartItems, userID, setItemsToCheckout, basket) {
+export async function removeItemFromCartOnCheckout(existingCartItems, userID, setItemsToCheckout, basket ) {
 
-  
+    console.log("removeItemFromCartOnCheckout function ran ")
     console.log("basket ", basket);
     console.log("existingCartItems ", existingCartItems);
     console.log("userID ", userID);
     const totalPriceOfBasketItems = calculateTotalPrice(basket);
+    
     try {
         const userRef = doc(database, 'Users', userID);
         const userDocument = await getDoc(userRef);
@@ -557,10 +558,10 @@ export async function removeItemFromCartOnCheckout(existingCartItems, userID, se
         if (userDocument.exists()) {
             const cartArray = existingCartItems;
             const financingArray = userDocument.data().financing || [];
-            console.table("cartArray ", cartArray);
-
+           
             // Update the document with the modified cart and financing arrays
             const newOrderid = generateRandomID(5);
+            
             await updateDoc(userRef, { cart: cartArray });
             await updateDoc(userRef, {
                 financing: [
@@ -573,6 +574,14 @@ export async function removeItemFromCartOnCheckout(existingCartItems, userID, se
                     }
                 ]
             });
+           
+            sendCheckoutConfirmationEmail({
+                fullName: userDocument.data().fullname,
+                userEmail: userDocument.data().email,
+                orderID: newOrderid.toUpperCase(),
+                orderArray: basket,
+                amountLeftToPay: Number(totalPriceOfBasketItems)
+            })
             toast.success(`Item removed from cart successfully`);
         } else {
             console.error(`User with ID ${userID} not found.`);
@@ -632,6 +641,40 @@ export async function sendEmail(emailData) {
 };
 
 
+export async function sendCheckoutConfirmationEmail(emailData) {
+    //send a post request to a node js express server to send an email containing users order information
+    console.log("sendCheckoutConfirmationEmail email function: " + JSON.stringify(emailData))
+    try {
+        const response = await fetch('https://afritech-sendgrid-email-server.onrender.com/send-order-confirmation-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(emailData),
+        });
+        if (response.ok) {
+            console.log('Email sent successfully');
+        } else {
+            console.error('Failed to send email');
+        }
+    } catch (error) {
+        console.error('Error sending email:', error.message, error);
+    }
+};
+
+export async function sendAccountVerificationEmail() {
+    try {
+        const response = await fetch('https://afritech-sendgrid-email-server.onrender.com/send-verify-user-account', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok) {
+            console.log('Email sent successfully');
+        } else {
+            console.error('Failed to send email');
+        }
+    } catch (error) {
+        console.error('Error sending email:', error.message, error);
+    }
+};
 
 
 

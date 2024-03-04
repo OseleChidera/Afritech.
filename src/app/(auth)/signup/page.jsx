@@ -12,6 +12,7 @@ import Step4 from "../../../components/multistep form/Step4.jsx"; // Import Step
 import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from react-redux for Redux state management
 import { setLoading, incrementSignup, decrementSignup, incrementSignin, decrementSignin, updateUserFormEntries, fetchDataByUserId, userData, setUserData, incrementAnimationCounter, decrementAnimationCounter } from '../../../redux/user'; // Import Redux actions and selectors
 import { useRouter } from 'next/navigation'; // Import useRouter hook from Next.js for routing
+import { sendAccountVerificationEmail } from '@/utils/helperFunctions';
 
 export default function Multistep() {
   const dispatch = useDispatch(); // Get dispatch function from useDispatch hook
@@ -100,7 +101,11 @@ export default function Multistep() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           dispatch(setUserData(docSnap.data()));
-          toast.success('User SignUp complete', { autoClose: 500, onOpen: () => redirect("/signin") });
+          toast.success('User SignUp complete', { autoClose: 500, onOpen: () => {
+            redirect("/signin")
+           
+          } });
+          sendAccountVerificationEmail()
           // redirect("/signin");
         } else {
           console.log('No such document!');

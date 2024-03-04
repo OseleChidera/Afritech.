@@ -9,6 +9,8 @@ import { useRouter, usePathname } from "next/navigation"; // Import useRouter an
 import { setUserId , setAuthCallbackUser , setData , setCurrentfirebaseUserInfo } from '../../redux/user'
 import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch hooks from react-redux
 import { toast } from "react-toastify";
+import { sendCheckoutConfirmationEmail } from '@/utils/helperFunctions';
+
 
 export default function Cart ({ setShowCart, showCartFn, showCart, userIDString })  {
     // State variables
@@ -20,7 +22,10 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
     const [basketTotalCost, setBasketTotalCost] = useState(null);
     const [newArray, setNewArray] = useState(null);
     const [userData , setUserData] = useState(null)
+    const [newOrderId , setNewOrderId] = useState("")
+    const [orderCost , setOrderCost] = useState("")
     const data = useSelector((state) => state.user.data);
+    const firebaseUserInfo = useSelector((state) => state.user.firebaseUserInfo);
     const [fetchedData, setFetchedData] = useState({ // Local state for fetched data
         userData: null,
         productsArray: null,
@@ -45,7 +50,10 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
             checkbox.checked = false;
         });
     }
-
+    function findOrder(orderID){
+        let order = firebaseUserInfo?.financing?.find((order)=> order.orderId == orderID);
+        return order;
+    }
     // Function to handle checkout of all selected items
     async function handleCheckOut(userIDString) {
         if (!itemsToCheckout || itemsToCheckout.length === 0) {
@@ -58,8 +66,9 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
         if (window.confirm(`Are you sure you want to checkout ${basket.length} items which costs ₦${formatNumberWithCommas(basketTotalCost)}? /n you wont be able to undo this action see the faq for further information.`)) {
             try {
                 const existingCartItems = userData.cart.filter(obj => !itemsToCheckout.includes(obj.cartItemID));
-                removeItemFromCartOnCheckout(existingCartItems, userIDString, setItemsToCheckout, basket);
-
+                await removeItemFromCartOnCheckout(existingCartItems, userIDString, setItemsToCheckout, basket, setNewOrderId, setOrderCost );
+                setNewOrderId(null) 
+                setOrderCost(null)
                 // Clear selected items and itemsToCheckout array
                 setSelectCartItems(false);
                 toast.info('redirecting to the payment page', {autoClose: 700, onOpen: ()=> router.push(`/main/payment`)})
@@ -152,7 +161,7 @@ export default function Cart ({ setShowCart, showCartFn, showCart, userIDString 
                     )}
                 </div>
                 <button onClick={() => handleCheckOut(userIDString)} className={`px-5  bg-[#695acd] text-white capitalize text-center py-1 rounded-md ${''}`}>
-                    Checkout Items
+                    Checkout Item(s)
                 </button>
             </div>
         </div>
