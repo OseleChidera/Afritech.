@@ -101,7 +101,7 @@ export default function Page({ params }) {
                         </div>
                         
                         <div>
-                            <Link href={`${product?.link}`} className='capitalize font-semibold text-xl underline underline-offset-1'>
+                            <Link href={`${product?.link}`} className='capitalize font-semibold text-xl underline underline-offset-1' target="_blank">
                                 <button className='font-bold bg-[#695acd] text-white rounded-xl text-xl capitalize px-4 py-[0.55rem] relative mb-4'>find out more</button>
                             </Link>
                         </div>

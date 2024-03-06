@@ -101,6 +101,7 @@ if (typeof window !== 'undefined') {
         setData(prev => ({ ...prev, ...newData })); // Update form data
         if (final) { // Check if final step
             SignumMultistepApiReq(newData); // Submit form data
+            dispatch(setSignupIndex(0))
             return;
         }
         dispatch(incrementSignin(final)); // Increment signin step

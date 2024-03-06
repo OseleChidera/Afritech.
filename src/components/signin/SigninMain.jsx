@@ -8,7 +8,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
 import { SigninSchema } from '../../utils/schemautils'
 import { useSelector, useDispatch } from "react-redux";
-import { setUserId, incrementSigninToStartMultistep,  } from '../../redux/user'
+import { setUserId, incrementSigninToStartMultistep, setSignupIndex } from '../../redux/user'
 import axios from 'axios';
 import { useRouter } from 'next/navigation' 
 
@@ -71,7 +71,9 @@ export default function SigninMain ({ nextStep, isDisabled }){
                             })
                             .catch((error) => {
                                 toast.error("auth/invalid-login-credential signup first", 
-                                {onOpen: () => router.push("/signup")}
+                                {onOpen: () => {
+                                    dispatch(setSignupIndex(0))
+                                    router.push("/signup")}}
                                 );
                                 console.log(error.code, error.message);
                             });

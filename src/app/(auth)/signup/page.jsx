@@ -10,7 +10,7 @@ import Step2 from "../../../components/multistep form/Step2.jsx"; // Import Step
 import Step3 from "../../../components/multistep form/Step3.jsx"; // Import Step3 component
 import Step4 from "../../../components/multistep form/Step4.jsx"; // Import Step4 component
 import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from react-redux for Redux state management
-import { setLoading, incrementSignup, decrementSignup, incrementSignin, decrementSignin, updateUserFormEntries, fetchDataByUserId, userData, setUserData, incrementAnimationCounter, decrementAnimationCounter } from '../../../redux/user'; // Import Redux actions and selectors
+import { setLoading, incrementSignup, decrementSignup, incrementSignin, decrementSignin, updateUserFormEntries, fetchDataByUserId, userData, setUserData, incrementAnimationCounter, decrementAnimationCounter, setSignupIndex } from '../../../redux/user'; // Import Redux actions and selectors
 import { useRouter } from 'next/navigation'; // Import useRouter hook from Next.js for routing
 import { sendAccountVerificationEmail , sendUserAccountVerificationPendingEmail} from '@/utils/helperFunctions';
 
@@ -128,6 +128,8 @@ export default function Multistep() {
     setData(prev => ({ ...prev, ...newData }));
     if (final) {
       ApiReq(newData);
+    dispatch(setSignupIndex(0));
+
       return;
     }
     dispatch(incrementAnimationCounter());
