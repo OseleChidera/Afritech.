@@ -3,7 +3,7 @@ import { usePaystackPayment } from "react-paystack";
 import { PaystackButton } from 'react-paystack';
 import { useSelector, useDispatch } from "react-redux";
 import PaymentProduct from "./PaymentProduct";
-import { formatNumberWithCommas, updateFinancingItemPrice, sendEmail , updateQtyAfterCheckoutOnDelete} from "@/utils/helperFunctions";
+import { formatNumberWithCommas, updateFinancingItemPrice, sendEmail , updateQtyAfterCheckoutOnDelete , sendOrderCancelledEmail} from "@/utils/helperFunctions";
 import { setPaymentTabIndex } from "@/redux/user";
 import Image from "next/image";
 import trashIcon from "../../../public/icons/trashIcon.svg"
@@ -70,6 +70,7 @@ async function deleteOrderAfterCheckout(){
         // Update qty for the product in the corresponding collection
         await updateQtyAfterCheckoutOnDelete(item.collectionString, item.productID , userID , orderID);
       });
+      await sendOrderCancelledEmail({orderID,productsArray, data , financingTotal})
 }
     const handlePaystackCloseAction = () => {
         console.log('closed');

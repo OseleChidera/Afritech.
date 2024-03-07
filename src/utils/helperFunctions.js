@@ -682,7 +682,24 @@ export async function sendCheckoutConfirmationEmail(emailData) {
         console.error('Error sending email:', error.message, error);
     }
 };
-
+export async function sendOrderCancelledEmail(emailData) {
+    //send a post request to a node js express server to send an email containing users order information
+    console.log("sendOrderCancelledEmail email function: " + JSON.stringify(emailData))
+    try {
+        const response = await fetch('https://afritech-sendgrid-email-server.onrender.com/send-order-cancelled-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(emailData),
+        });
+        if (response.ok) {
+            console.log('Email sent successfully');
+        } else {
+            console.error('Failed to send email');
+        }
+    } catch (error) {
+        console.error('Error sending email:', error.message, error);
+    }
+};
 export async function sendAccountVerificationEmail() {
     try {
         const response = await fetch('https://afritech-sendgrid-email-server.onrender.com/send-verify-user-account', {
