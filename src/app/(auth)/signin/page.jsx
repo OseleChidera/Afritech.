@@ -79,6 +79,7 @@ if (typeof window !== 'undefined') {
                 newData.financing = [""]; // Initialize financing
                 newData.reviews = [""]; // Initialize reviews
                 newData.paymentCompletedArray = [""]; // Initialize payment completed
+                newData.accountVerified = true;
                 // Update Firestore document
                 updateDoc(docRef, newData); // Update document with new data
                 // Display success toast and redirect

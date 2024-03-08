@@ -97,6 +97,7 @@ export default function Multistep() {
         newData.financing = [""]
         newData.reviews = [""]
         newData.paymentCompletedArray = [""]
+        newData.accountVerified = true;
         newData.dateOfBirth = new Date(newData.dateOfBirth).getTime();
         dispatch(updateUserFormEntries(JSON.stringify(newData, null, 2)));
 
