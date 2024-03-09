@@ -18,7 +18,7 @@ const PopularItems = () => {
         <h2 className="capitalize text-[#695acde4] text-lg">shop items</h2>
         <Link href={`/main/marketplace`}><button className="capitalize border-none bg-[#695acde4] text-white rounded-lg text-xl px-3 py-1">see all</button></Link>
       </div>
-      <div className="grid-container">
+      <div className="grid-container justify-center">
         {/* Check if popular products data exists */}
         {data?.popularProductsArray ? (
           // If popular products data exists, map through each product and render PopularProduct component
