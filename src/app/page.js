@@ -256,12 +256,15 @@ const page = () => {
                 Sign Up
               </button>
             </Link>
+            
+            <Link href={`/signin`}>
             <button
               onClick={() => checkIfUserIsloggedIn(userID)}
               className="rounded-xl flex-1  border-none p-[0.65rem] text-xl font-semibold bg-[#695acde4] text-white w-full"
             >
               Sign In
             </button>
+            </Link>
           </div>
         </div>
         <footer className=" bg-black text-white flex flex-col items-center text-center gap-6 p-4 mb-0 ">
