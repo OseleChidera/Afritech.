@@ -85,11 +85,13 @@ const PopularProduct = ({ id, name, qty ,price, productID, favouriteItemID, imag
     }, [])
 
     return (
-        <Link href="/product/[id]" as={`/popularProduct/${id}`}>
+        
         <div className=" relative  rounded-xl  bg-white w-full   border-[0.02px] border-black">
+            <Link href="/product/[id]" as={`/popularProduct/${id}`}>
             <div className="max-h-fit rounded-xl  shadow-2xl bg-white  border-black overflow-hidden mx-auto">
                 <Image src={image} className=" w-full" width={170} height={170} alt="product" priority objectFit="cover"/>
             </div>
+            </Link>
             <Link href="/product/[id]" as={`/popularProduct/${id}`}>
                 <div className="info p-2">
                     <h2 className="text-base font-semibold ">{name}</h2>
@@ -116,7 +118,6 @@ const PopularProduct = ({ id, name, qty ,price, productID, favouriteItemID, imag
                     <Image src={favourite} width={20} height={20} className={``} alt="popular product favourite icon"/>
                 </div>))}
         </div>
-        </Link>
     );
 };
 

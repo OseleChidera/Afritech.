@@ -19,38 +19,13 @@ export default function Page() {
     const authCallbackUserObj = JSON.parse(authCallbackUser)
 
     const userInfoArray = [
-        {   
-            index: 0,
-            title: "Change your profile picture",
-            action: 'changePfp',
-            actionToPerfom: true,
-        },
         {
-            index: 1,
-            title: "Change your NinSlip picture",
-            action: 'changeNinSlip',
-            actionToPerfom: data?.userData?.reuploadNin
-        },
-        ,
-        {
-            index: 2,
-            title: "Send email verification link",
-            action: 'verifyEmail',
-            actionToPerfom: !authCallbackUserObj?.emailVerified
-        },
-        ,
-        {
-            index: 3,
-            title: "Change your account email",
-            action: 'changeEmail',
-            actionToPerfom: authCallbackUserObj?.emailVerified
-        },
-        {
-            index: 5,
+            icon: "",
             title: "Change your Location",
-            action: 'changeLocation',
-            actionToPerfom: true
-        }
+            description: "",
+            action: "changeLocation",
+            actionToPerfom: true,
+          },
       
     ]
 const [settings , setSettings] = useState()
@@ -84,12 +59,15 @@ const [settings , setSettings] = useState()
     },[])
   return (
     <>
-          {showModal && <Modal />}
-          <div className="w-full relative h-fit  overflow-y-auto">
-              <div className="p-[20px] flex flex-col gap-4">
-                  <UserProfile />
-                  <div className="flex flex-col gap-4 items-center  overflow-y-auto hide-scrollbar h-[55vh]">
-                  <UserDateOfBirthDetail name={"Date Of Birth"} value={data?.userData?.dateOfBirth} />
+    {showModal && <Modal />}
+    <div
+      className={`w-full relative h-screen p-[20px] ${
+        showModal ? " overflow-hidden" : ""
+      }`}
+    >
+      <UserProfile />
+      <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto border  border-red-500">
+      <UserDateOfBirthDetail name={"Date Of Birth"} value={data?.userData?.dateOfBirth} />
                       {settings?.map((userDetail, index) => (
                           <UserDetail key={index} name={userDetail.name} value={userDetail.value} index={index} />
                       ))}
@@ -103,11 +81,10 @@ const [settings , setSettings] = useState()
                               return <UserInfoModal key={index} index={info.index} title={info.title} action={info.action} />
                           })
                       }
-                  </div>
-              </div>
-              <Nav />
-          </div>
-    </>
+      </div>
+      <Nav />
+    </div>
+  </>
   );
 }
 

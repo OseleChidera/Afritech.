@@ -23,7 +23,7 @@ export default function Setting({ icon, title, description, action }) {
         action == 'redirectTo' ? redirect(`/main/user/${title.toLowerCase()}`) : showModal(title)
     }
     return (
-        <div className="flex items-center justify-between gap-3 rounded-xl bg-[#695acde4] text-white p-2" onClick={() => settingAction(action)}>
+        <div className="flex items-center justify-between gap-3 rounded-xl  bg-[#695acd] text-white p-2" onClick={() => settingAction(action)}>
             <div className="user-info flex-1 flex items-center justify-between  ">
                 <div className="flex gap-2  items-center">
                     <div className="flex items-center justify-center rounded-full ml-4 w-[20px] h-[20px]">

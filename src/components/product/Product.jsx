@@ -77,7 +77,9 @@ const Product = ({
   // console.log("check if the user favourited the product", isFavourited)
 
   return (
-    <Link
+    
+      <div className=" relative  rounded-xl  bg-white w-full   border-[0.02px] border-black">
+        <Link
       href={
         collectionString == "Products"
           ? `/product/[id]`
@@ -89,7 +91,6 @@ const Product = ({
           : `/popularProduct/${id}`
       }
     >
-      <div className=" relative  rounded-xl  bg-white w-full   border-[0.02px] border-black">
         <div className=" max-h-fit rounded-xl  shadow-2xl bg-white  border-black overflow-hidden mx-auto">
           <Image
             src={image}
@@ -99,6 +100,7 @@ const Product = ({
             alt="product"
           />
         </div>
+        </Link>
         <Link
           href={
             collectionString == "Products"
@@ -154,7 +156,6 @@ const Product = ({
             </div>
           ))}
       </div>
-    </Link>
   );
 };
 

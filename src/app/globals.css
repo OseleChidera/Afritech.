@@ -131,7 +131,7 @@ display: none;
 
 .grid-container {
   display: grid; /* Set the display property to grid */
-  grid-template-columns: repeat(auto-fit, minmax(170px, 0.5fr)); /* Define the grid columns to auto-fit with a minimum width of 150px and a maximum of 0.5 fractional units */
+  grid-template-columns: repeat(auto-fit, minmax(130px, 0.5fr)); /* Define the grid columns to auto-fit with a minimum width of 150px and a maximum of 0.5 fractional units */
   /* grid-gap: 20px;  */
   grid-row-gap: 20px;
   grid-column-gap: 20px;

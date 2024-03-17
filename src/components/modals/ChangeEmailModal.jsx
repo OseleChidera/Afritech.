@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 export default function ChangeEmailModal() {
-    const [newEmail, setNewEmail] = useState(null);
+    const [newEmail, setNewEmail] = useState("");
     const [disableUploadBtn, setDisableUploadBtn] = useState(false);
     const hasPermission = useSelector((state) => state.user.hasStorageAccessPermission);
     const userID = useSelector((state) => state.user.userID);

@@ -37,7 +37,7 @@ export default function PendingPayment() {
                         </div>
                     ) : (
                         // Render a message if payment array is empty
-                        <div className="border border-black h-[50vh] w-full text-xl text-[#695acd] flex items-center justify-center">
+                        <div className=" border-[#695acd] border-t h-[50vh] w-full text-xl text-[#695acd] flex items-center justify-center">
                             <div className="h1">No Items To Display</div>
                         </div>
                     )

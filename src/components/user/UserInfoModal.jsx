@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { showModalDispachFn, setModalToshow } from '../../redux/user'
 import { getAuth, sendEmailVerification } from "firebase/auth";
-import { useRouter } from 'next/navigation';
-
+import { useRouter , usePathname } from 'next/navigation';
+import Image from 'next/image';
+import arrow from "../../../public/icons/arrow-white-right.svg"
 
 
 export default function UserInfoModal({ title, action, index }) {
     const router = useRouter()
+    const path = usePathname()
     const authCallbackUser = useSelector((state) => state.user.authCallbackUser);
     const authCallbackUserObj = JSON.parse(authCallbackUser)
     const auth = getAuth();
@@ -46,7 +48,7 @@ export default function UserInfoModal({ title, action, index }) {
     }
     return (
       <div
-        className="flex justify-between items-center w-full p-3 rounded-lg  bg-[#695acd]"
+        className="flex justify-between items-center w-full p-2 py-3 rounded-lg  bg-[#695acd]"
         key={index}
         onClick={() =>
           action == "verifyEmail"
@@ -59,6 +61,10 @@ export default function UserInfoModal({ title, action, index }) {
             {title}
           </h5>
         </div>
+        {path.includes("/main/user") &&
+        (<div className="w-fit ">
+          <Image src={arrow} width={20} className='' alt='right arrow'/>
+        </div>)}
       </div>
     );
 }

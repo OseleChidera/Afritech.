@@ -36,13 +36,13 @@ export default function PendingPayment() {
                         </div>
                     ) : (
                         // Render a message when there are no pending payments
-                        <div className="border border-black h-[50vh] w-full text-xl text-[#695acd] flex items-center justify-center">
+                        <div className=" h-[50vh] w-full text-xl text-[#695acd] flex items-center justify-center">
                             <div className="h1">No Items To Display</div>
                         </div>
                     )
                 ) : (
                     // Render the UnauthorizedAccess component for unauthorized users
-                    <div className="absolute top-0 left-0 w-full h-screen">
+                    <div className="border border-[#695acd] absolute top-0 left-0 w-full h-screen">
                         <UnauthorizedAccess />
                     </div>
                 )}

@@ -43,7 +43,7 @@ export default function page() {
               ))
             ) : (
               // Display "No Items To Display" text if arrayWithoutEmptyStrings is empty
-              <div className="border border-black h-[50vh] w-[90vw] mx-auto text-xl text-[#695acd] flex items-center justify-center">
+              <div className=" h-[50vh] w-[90vw] mx-auto text-xl text-[#695acd] flex items-center justify-center">
                 <div className="h1">No Item(s) To Display</div>
               </div>
             )

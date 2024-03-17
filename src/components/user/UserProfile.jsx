@@ -29,8 +29,8 @@ export default function UserProfile() {
         // console.log("firebaseUserInfo ", firebaseUserInfo)
     }, []);
   return (
-     
-      <div className="flex items-center justify-between gap-3 rounded-xl bg-[#695acde4] text-white p-2 sticky top-0 mb-4">
+    <Link href={`/main/user/user-info `}>
+      <div className="flex items-center justify-between gap-3 rounded-xl  bg-[#695acd] text-white p-2 sticky top-0 mb-4 mx-auto" >
           <div className="user-info flex-1 flex items-center justify-between  " >
                 {firebaseUserInfo?.email ? (<div className="flex gap-2  items-center">
                   <div className=" rounded-full overflow-hidden w-[70px] h-[70px] flex items-center justify-center" onClick={() => showModal('viewePfp')}>
@@ -42,14 +42,15 @@ export default function UserProfile() {
                       {authCallbackUserObj?.emailVerified ? (<span className='text-xs underline underline-offset-2  '>Verified</span>) : (<span className='text-xs underline underline-offset-2 text-white '>Unverified</span>)}
                       </div>
                 </div>) : (<UserProfileSkeleton/>)}
-              <Link href={`/main/user/user-info`}>
-                    <div className="w-fit  " >
+              
+                    <div className="w-fit   " >
                         <Image src={arrow} width={20} className='' alt='right arrow'/>
                     </div>
-                  </Link>
+                 
               </div>
 
           </div>
+          </Link>
   )
 }
 
