@@ -67,7 +67,7 @@ export default function Reviews({ reviews, productId, collectionString }) {
           </button>
         </div>
       </div>
-      <div id="existingReviews" className='border  border-black flex flex-col gap-4 w-full'>
+      <div id="existingReviews" className=' flex flex-col gap-4 w-full'>
         {
           reviewsArrayWithoutEmptyStrings?.map((review , index) => <Review key={index} date={review?.date} review={review?.review} userID={review?.userId} reviewID={review?.reviewId} productId={productId} collectionString={collectionString}/> )
         }

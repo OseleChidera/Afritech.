@@ -173,7 +173,7 @@ export async function deleteReview(productID, reviewItemID, collectionString) {
 
 export async function addItemsToCart(productId, productQuantity = 1, userID, setAddToCartQty = undefined, collectionStringValue) {
     // console.log(productId, productQuantity, userID);
-    let cartItemID = generateRandomID(20);
+    
     try {
         const productDocRef = doc(database, collectionStringValue, productId);
         const currentUserRef = doc(database, 'Users', userID);
@@ -190,6 +190,7 @@ export async function addItemsToCart(productId, productQuantity = 1, userID, set
 
                 // Add the product to the cart based on productQuantity
                 for (let i = 0; i < productQuantity; i++) {
+                    let cartItemID = generateRandomID(20);
                     const cartItem = {
                         ...productData,
                         cartItemID,

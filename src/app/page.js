@@ -250,21 +250,18 @@ const page = () => {
             </p>
           </div>
 
-          <div className="flex flex-col gap-2 w-4/5 md:w-full md:flex-row ">
+          <div className="flex flex-col gap-2 w-4/5 md:w-full md:flex-row mx-auto">
             <Link href={`/signup`} className="flex-1">
-              <button className="rounded-xl bg-[#F1A208] border-none p-[0.65rem] text-xl font-semibold w-full text-white">
-                Sign Up
+              <button className="rounded-xl bg-[#F1A208] text-white border-none p-[0.65rem] text-xl font-semibold w-full">
+                Get Started
               </button>
             </Link>
-            
-            <Link href={`/signin`}>
             <button
-              onClick={() => checkIfUserIsloggedIn(userID)}
-              className="rounded-xl flex-1  border-none p-[0.65rem] text-xl font-semibold bg-[#695acde4] text-white w-full"
+              onClick={() => checkIfUserIsloggedIn(auth)}
+              className="rounded-xl bg-[#695acde4] text-white  border-none p-[0.65rem] text-xl font-semibold w-full flex-1"
             >
               Sign In
             </button>
-            </Link>
           </div>
         </div>
         <footer className=" bg-black text-white flex flex-col items-center text-center gap-6 p-4 mb-0 ">
