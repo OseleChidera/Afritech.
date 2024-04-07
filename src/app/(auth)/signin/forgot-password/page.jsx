@@ -53,7 +53,7 @@ const FogortpasswordEmail = ({ user, prevStep, currentIndex, setCurrentIndex, is
                 {/* Formik form for handling form state and validation */}
                 <Formik
                     initialValues={{
-                        email: 'deraemma8@gmail.com',
+                        email: '',
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={handleSubmit} // Call handleSubmit function on form submission
@@ -62,7 +62,7 @@ const FogortpasswordEmail = ({ user, prevStep, currentIndex, setCurrentIndex, is
                         <Form>
                             <div className="mb-3 ">
                                 <label className='font-bold capitalize block mb-[0.25rem] text-white' htmlFor="email">Email : </label>
-                                <Field name="email" type="email" className="w-full p-2 px-5 rounded-xl" />
+                                <Field name="email" type="email" className="w-full p-2 px-5 rounded-xl" placeholder="Enter your email"/>
                                 {errors.email && touched.email ? (
                                     <div className='text-[0.7rem] text-red-600 font-semibold'>{errors.email}</div>
                                 ) : null}
