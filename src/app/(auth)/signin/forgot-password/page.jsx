@@ -47,7 +47,7 @@ const FogortpasswordEmail = ({ user, prevStep, currentIndex, setCurrentIndex, is
             <div id='form-two' className='max-w-xs w-full   scaleAnimation'>
                 <div className="mb-3">
                     <span className='font-extrabold capitalize text-white text-3xl mb-6'>
-                        Enter your E-mail to reset the password.
+                        Enter your E-mail to reset your password.
                     </span>
                 </div>
                 {/* Formik form for handling form state and validation */}
