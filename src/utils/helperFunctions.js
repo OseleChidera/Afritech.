@@ -649,7 +649,7 @@ export function extractLastName(fullName) {
 export async function sendEmail(emailData) {
     //send a post request to a node js express server to send an email containing users order information
     try {
-        const response = await fetch('https://three-radial-echidna.glitch.me/send-email', {
+        const response = await fetch('https://pinnate-proud-dugout.glitch.me/send-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(emailData),
@@ -669,7 +669,7 @@ export async function sendCheckoutConfirmationEmail(emailData) {
     //send a post request to a node js express server to send an email containing users order information
     console.log("sendCheckoutConfirmationEmail email function: " + JSON.stringify(emailData))
     try {
-        const response = await fetch('https://three-radial-echidna.glitch.me/send-order-confirmation-email', {
+        const response = await fetch('https://pinnate-proud-dugout.glitch.me/send-order-confirmation-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(emailData),
@@ -687,7 +687,7 @@ export async function sendOrderCancelledEmail(emailData) {
     //send a post request to a node js express server to send an email containing users order information
     console.log("sendOrderCancelledEmail email function: " + JSON.stringify(emailData))
     try {
-        const response = await fetch('https://three-radial-echidna.glitch.me/send-order-cancelled-email', {
+        const response = await fetch('https://pinnate-proud-dugout.glitch.me/send-order-cancelled-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(emailData),
@@ -703,7 +703,7 @@ export async function sendOrderCancelledEmail(emailData) {
 };
 export async function sendAccountVerificationEmail() {
     try {
-        const response = await fetch('https://three-radial-echidna.glitch.me/send-verify-user-account', {
+        const response = await fetch('https://pinnate-proud-dugout.glitch.me/send-verify-user-account', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -719,7 +719,7 @@ export async function sendAccountVerificationEmail() {
 
 export async function sendUserAccountVerificationPendingEmail(userData ) {
     try {
-        const response = await fetch('https://three-radial-echidna.glitch.me/send-account-pending-verification-email', {
+        const response = await fetch('https://pinnate-proud-dugout.glitch.me/send-account-pending-verification-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData),
