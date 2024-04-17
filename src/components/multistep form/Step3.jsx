@@ -36,7 +36,7 @@ const Step3 = ({ data, next, prev }) => {
     ];
     const locationOptions = [
         { value: 'Nigeria', label: 'Nigeria' },
-        { value: 'Senegal', label: 'Senegal' },
+        // { value: 'Senegal', label: 'Senegal' },
     ];
     return (
         <Formik
